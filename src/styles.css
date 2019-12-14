@@ -12,6 +12,16 @@ body {
   font: normal 16px / normal "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+a {
+  color: #495057;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .container {
   margin-top: 50px;
 }
@@ -25,8 +35,15 @@ body {
 
 .article-list {
   border-bottom: 1px solid #ccc;
+  cursor: pointer;
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
+}
+
+.article-list:hover h3,
+.article-list:hover p {
+  color: #fd7e14;
+  transition: all 0.3s ease-in-out;
 }
 
 .article-list:nth-child(1n) {
@@ -41,4 +58,31 @@ body {
   right: 0;
   top: 0;
   width: 100%;
+}
+
+.hero-image {
+  background-color: #ccc;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 80%;
+  height: 450px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+}
+
+.hero-container {
+  background-color: #fff;
+  margin-top: 450px;
+  padding-top: 40px;
+}
+
+.hero-container [class^="col"] {
+  background-color: #fff;
+}
+
+.detail-list {
+  border-top: 1px solid #ccc;
 }
