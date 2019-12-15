@@ -1,8 +1,13 @@
 import { MAX_RESULT } from "./config.js";
-import { getSimilarArticlesIndex } from "./utils.js";
+import {
+  getSimilarArticlesIndex,
+  getFilterCategories,
+  getArticlesFilterBy,
+  getArticlesSortBy
+} from "./utils.js";
 
 export const BlogAppReducer = (state, action) => {
-  const { listing, details } = { ...state };
+  const { listing, details, filterby } = { ...state };
   switch (action.type) {
     case "ALL_ARTICLES":
       localStorage.setItem(
@@ -11,7 +16,11 @@ export const BlogAppReducer = (state, action) => {
       );
       listing.allArticles = [...action.payload];
       listing.showingNoOfArticle = MAX_RESULT;
-      return { ...state, listing };
+      return {
+        ...state,
+        listing,
+        filterby: getFilterCategories([...action.payload])
+      };
     case "LOAD_MORE_ARTICLE":
       const totalPaging = Math.ceil(listing.allArticles.length / MAX_RESULT);
       listing.showingCurrentPagination = ++listing.showingCurrentPagination;
@@ -32,6 +41,26 @@ export const BlogAppReducer = (state, action) => {
         action.payload
       ]["likes"];
       return { ...state, listing };
+    case "FILTER_BY_AUTHOR":
+      listing.allArticles = getArticlesFilterBy(
+        [...listing.allArticles],
+        "author",
+        action.payload
+      );
+      return { ...state };
+    case "FILTER_BY_CATEGORY":
+      listing.allArticles = getArticlesFilterBy(
+        [...listing.allArticles],
+        "category",
+        action.payload
+      );
+      return { ...state };
+    case "SORT_BY":
+      listing.allArticles = getArticlesSortBy(
+        [...listing.allArticles],
+        action.payload
+      );
+      return { ...state };
     case "HIDE_LOADER":
       return { ...state, loader: action.payload };
     default:

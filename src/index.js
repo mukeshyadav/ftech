@@ -27,7 +27,8 @@ const blogAppIntialState = {
     currentArticleIndex: [],
     similarArticlesIndex: []
   },
-  filters: {}
+  filterby: null,
+  sortyby: {}
 };
 
 const BlogApp = () => {

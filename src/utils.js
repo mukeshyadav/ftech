@@ -23,3 +23,37 @@ export const getSimilarArticlesIndex = (listOfArticles, index) => {
   });
   return similarCategoryIndexes;
 };
+
+export const getFilterCategories = listOfArticles => {
+  const author = {};
+  const category = {};
+  const filters = { author: [], category: [] };
+
+  listOfArticles.forEach(article => {
+    const authorName = article["author"].replace(" ", "").toLowerCase();
+    const categoryName = article["category"].replace(" ", "").toLowerCase();
+    if (!author[authorName]) {
+      author[authorName] = authorName;
+      filters["author"].push(article["author"]);
+    }
+
+    if (!category[categoryName]) {
+      category[categoryName] = categoryName;
+      filters["category"].push(article["category"]);
+    }
+  });
+
+  return filters;
+};
+
+export const getArticlesFilterBy = (listOfArticles, key, value) => {
+  return listOfArticles.filter(
+    article => article[key].toLowerCase() === value.toLowerCase()
+  );
+};
+
+export const getArticlesSortBy = (listOfArticles, key) => {
+  return listOfArticles.sort((article1, article2) =>
+    article1[key] > article2[key] ? 1 : -1
+  );
+};
