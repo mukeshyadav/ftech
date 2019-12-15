@@ -7,6 +7,7 @@ import { MainTitle } from "../../components/MainTitle";
 import { ArticleList } from "../../components/ArticleList";
 import { SortAndFilter } from "../../components/SortAndFilter";
 import { useBlogAppValue } from "../../store.js";
+import { MAX_RESULT } from "../../config.js";
 
 const Listing = () => {
   const [
@@ -28,20 +29,20 @@ const Listing = () => {
   const history = useHistory();
 
   useEffect(() => {
-    // if (!hasBlogAppArticleInStorage) {
-    fetch(`./blog.json`)
-      .then(res => res.json())
-      .then(resData => {
-        dispatch({ type: "ALL_ARTICLES", payload: resData });
-        dispatch({ type: "HIDE_LOADER", payload: false });
+    if (!hasBlogAppArticleInStorage) {
+      fetch(`./blog.json`)
+        .then(res => res.json())
+        .then(resData => {
+          dispatch({ type: "ALL_ARTICLES", payload: resData });
+          dispatch({ type: "HIDE_LOADER", payload: false });
+        });
+    } else {
+      dispatch({
+        type: "ALL_ARTICLES",
+        payload: JSON.parse(localStorage.getItem("blogAppAllArticles"))
       });
-    // } else {
-    //   dispatch({
-    //     type: "ALL_ARTICLES",
-    //     payload: JSON.parse(localStorage.getItem("blogAppAllArticles"))
-    //   });
-    //   dispatch({ type: "HIDE_LOADER", payload: false });
-    // }
+      dispatch({ type: "HIDE_LOADER", payload: false });
+    }
   }, []);
 
   const moveToDetailPage = index => {
@@ -68,7 +69,7 @@ const Listing = () => {
           ))}
           <Row className="mb-5">
             <Col className="d-flex justify-content-center mb-5">
-              {showMoreButton ? (
+              {showMoreButton && allArticles.length > MAX_RESULT ? (
                 <Button
                   color="primary"
                   onClick={e =>

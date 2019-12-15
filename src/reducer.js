@@ -7,7 +7,12 @@ import {
 } from "./utils.js";
 
 export const BlogAppReducer = (state, action) => {
-  const { listing, details, filterby } = { ...state };
+  let { listing, details, filterby } = { ...state };
+  if (!listing.allArticles.length) {
+    listing.allArticles = JSON.parse(
+      localStorage.getItem("blogAppAllArticles")
+    );
+  }
   switch (action.type) {
     case "ALL_ARTICLES":
       localStorage.setItem(
@@ -35,6 +40,8 @@ export const BlogAppReducer = (state, action) => {
         listing.allArticles,
         action.payload
       );
+      console.log(details);
+      localStorage.setItem("blogAppDetails", JSON.stringify(details));
       return { ...state, details };
     case "UPDATE_LIKE":
       listing.allArticles[action.payload]["likes"] = ++listing.allArticles[

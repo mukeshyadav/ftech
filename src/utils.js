@@ -14,6 +14,7 @@ export const subStringText = (str, length = 100) => {
 };
 
 export const getSimilarArticlesIndex = (listOfArticles, index) => {
+  console.log(listOfArticles, index);
   let categoryName = listOfArticles[index]["category"];
   let similarCategoryIndexes = [];
   listOfArticles.forEach((article, index) => {

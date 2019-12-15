@@ -8,13 +8,25 @@ import { ArticleDetail } from "../../components/ArticleDetail";
 import { useBlogAppValue } from "../../store.js";
 
 const ArticleDetails = () => {
-  const [
+  let [
     {
       listing: { allArticles },
       details: { currentArticleIndex, similarArticlesIndex }
     },
     dispatch
   ] = useBlogAppValue();
+
+  if (!allArticles.length) {
+    const readFromLocalStorage = JSON.parse(
+      localStorage.getItem("blogAppDetails")
+    );
+    const readAllArticles = JSON.parse(
+      localStorage.getItem("blogAppAllArticles")
+    );
+    allArticles = readAllArticles;
+    currentArticleIndex = readFromLocalStorage["currentArticleIndex"];
+    similarArticlesIndex = readFromLocalStorage["similarArticlesIndex"];
+  }
 
   const history = useHistory();
 
