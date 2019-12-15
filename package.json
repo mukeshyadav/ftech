@@ -4,9 +4,7 @@
   "description": "FB tech coding exercise using React, React Hooks, React Router, Parcel and Cypress",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development cp -R ./public/blog.json ./dist && parcel serve public/index.html --open --port 8080",
-    "test:cypress": "start-server-and-test start http://localhost:8080 cypress",
-    "cypress": "cypress open"
+    "start": "NODE_ENV=development parcel serve public/index.html --open --port 8080"
   },
   "author": "",
   "license": "ISC",
@@ -28,7 +26,7 @@
     "@babel/plugin-transform-runtime": "^7.7.6",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "cypress": "^3.7.0",
+    "cpx": "^1.5.0",
     "parcel-bundler": "^1.12.4"
   }
 }
